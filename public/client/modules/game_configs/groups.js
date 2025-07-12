@@ -1,0 +1,30 @@
+export default [{
+    id: 0,
+    name: "foods",
+    place: false
+}, {
+    id: 1,
+    name: "walls",
+    place: true,
+    limit: 40
+}, {
+    id: 2,
+    name: "spikes",
+    place: true,
+    limit: 25
+}, {
+    id: 3,
+    name: "mills",
+    place: true,
+    limit: 100
+}, {
+    id: 4,
+    name: "traps",
+    place: true,
+    limit: 15
+}, {
+    id: 5,
+    name: "boosts",
+    place: true,
+    limit: 20
+}]
