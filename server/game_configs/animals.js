@@ -1,0 +1,33 @@
+export default [{ // cow
+    id: 0,
+    type: "passive",
+    req: ["food", 150, "gold", 200],
+    xpForKill: 400,
+    runTime: 5000,
+    randomMoveTime: 20000,
+    randomMoveWidth: 3000,
+    randomMoveHeight: 3000,
+    speed: .3,
+    runSpeedMult: 1.2,
+    health: 400,
+    scale: 75,
+    spawnLimit: 25
+}, { // wolf
+    id: 1,
+    type: "aggresive",
+    req: ["food", 200, "gold", 350],
+    xpForKill: 600,
+    runTime: 7500,
+    randomMoveTime: 20000,
+    randomMoveWidth: 3000,
+    randomMoveHeight: 3000,
+    speed: .4,
+    runSpeedMult: 1.2,
+    health: 950,
+    damage: 25,
+    scale: 75,
+    aggresiveZoneRange: 600,
+    damageZoneRange: 78,
+    power: 2,
+    spawnLimit: 100
+}]
