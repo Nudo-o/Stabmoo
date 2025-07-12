@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="description" content="Survive and build a base while protecting it from other survivors!">
+	  <meta name="keywords" content="game,games,gaming,online,io,multiplayer,moomoo,village,farm,stabmoo,sploop,starve">
+    
+    <link rel="shortcut icon" type="image/png" href="./assets/favicon.png"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <link href="https://fonts.googleapis.com/css?family=Hammersmith+One" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
+    
+    <title>Stab Moo</title>
+  </head>
+  <body oncontextmenu="return false;">
+    <div class="main-menu" id="main_menu">
+      <div class="main-menu-wrapper">
+        <div class="main-menu-header">
+          <div class="game-name"></div>
+          <div class="game-state-text" id="game_state_text">Loading...</div>
+        </div>
+
+        <div class="ui-element menu-card-holder hidden" id="menu_card_holder">
+          <!--<div class="main-menu-right-top-holder">
+            <ul class="main-menu-right-top-wrapper">
+              <li class="ui-element game-button" id="auth_btn">
+                <i class="material-icons" style="font-size: 25px; vertical-align: middle;">person_add</i>
+              </li>
+            </ul>
+          </div>-->
+
+          <div class="menu-card-wrapper">
+            <div class="menu-card-inline">
+              <input type="text" class="text-input name-input" id="name_input" placeholder="Enter Name" maxlength="15">
+
+              <div class="ui-element game-button enter-game-btn" id="enter_game">PLAY</div>
+            </div>
+
+            <ul class="ui-element skins-list" id="skin_list">
+              <li class="skin-item active-skin" index="0" style="background: #bf8f54"></li>
+              <li class="skin-item" index="1" style="background: #cbb091"></li>
+              <li class="skin-item" index="2" style="background: #ececec"></li>
+              <li class="skin-item" index="3" style="background: #c37373"></li> 
+              <li class="skin-item" index="4" style="background: #4c4c4c"></li>
+              <li class="skin-item" index="5" style="background: #ecaff7"></li>
+              <li class="skin-item" index="6" style="background: #738cc3"></li>
+              <li class="skin-item" index="7" style="background: #8bc373"></li>
+              <li class="skin-item" index="8" style="background: #91b2db"></li>
+              <li class="skin-item" index="9" style="background: #be5454"></li>
+              <li class="skin-item" index="10" style="background: #b700fa"></li>
+              <li class="skin-item" index="11" style="background: #3c66c9"></li>
+              <li class="skin-item" index="12" style="background: #f7cf45"></li>
+              <li class="skin-item" index="13" style="background: #cc862b"></li>
+              <li class="skin-item" index="14" style="background: #556877"></li>
+              <li class="skin-item" index="15" style="background: #658f3d"></li>
+            </ul>
+
+            <div class="ui-element" style="display: flex; flex-direction: column; gap: 5px; width: 100%; box-sizing: border-box;">
+              <span style="font-size: 12px;">You can get blue berries only after you select them</span>
+              <span style="font-size: 12px;">in the upgrades. If you have chosen them, then</span>
+              <span style="font-size: 12px;">you cannot get red berries!</span>
+              <span style="font-size: 14px;">Hold TAB - Show leaderboard</span>
+              <span style="font-size: 14px;">WASD - Movement</span>
+              <span style="font-size: 14px;">Q - Select food</span>
+              <span style="font-size: 14px;">E - Toggle auto attack</span>
+              <span style="font-size: 14px;">X - Lock look</span>
+              <span style="font-size: 14px;">Ctrl + Z - Debug panel</span>
+              <span style="font-size: 14px;">Version: 1.1b</span>
+              <a href="https://discord.gg/nr3WgaZ6mD" target="_blank" style="font-size: 14px; color: #fff;">Discord</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-ui hidden" id="game_ui">
+      <div class="top-left-holder">
+        <div class="game-profile-card-holder">
+          <div class="game-profile-card-wrapper ui-element">
+            <div class="game-profile-canvas-holder">
+              <canvas class="profile-canvas" id="profile_canvas" width="69" height="69"></canvas>
+            </div>
+
+            <ul class="game-profile-card-list">
+              <li class="game-profile-card-item">
+                <div class="profile-item profile-item-between">
+                  <span id="profile_nickname">?</span>
+                  <span id="profile_rank">?</span>
+                </div>
+              </li>
+
+              <li class="game-profile-card-item">
+                <div class="profile-item">
+                  <div class="health-bar-holder">
+                    <div class="health-bar-wrapper">
+                      <div class="health-bar-inner" id="profile_health_bar" health="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="game-profile-card-item">
+                <div class="profile-item">
+                  <div class="level-bar-holder">
+                    <div class="level-bar-wrapper">
+                      <div class="level-bar-inner" id="profile_level_bar" level="1" xp="0" maxxp="400"></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="game-resources-card-wrapper ui-element">
+            <ul class="game-resources-card-list">
+              <li class="game-resources-card-item">
+                <div class="resource-item">
+                  <img class="resource-icon" src="./assets/icons/gold_icon.png">
+
+                  <span class="resource-text" id="gold_display">0</span>
+                </div>
+              </li>
+
+              <li class="game-resources-card-item">
+                <div class="resource-item">
+                  <img class="resource-icon" src="./assets/icons/food_icon.png">
+
+                  <span class="resource-text" id="food_display">0</span>
+                </div>
+              </li>
+
+              <li class="game-resources-card-item">
+                <div class="resource-item">
+                  <img class="resource-icon" src="./assets/icons/tree_icon.png">
+
+                  <span class="resource-text" id="wood_display">0</span>
+                </div>
+              </li>
+
+              <li class="game-resources-card-item">
+                <div class="resource-item">
+                  <img class="resource-icon" src="./assets/icons/stone_icon.png">
+
+                  <span class="resource-text" id="stone_display">0</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-right-holder">
+        <div class="ui-buttons">
+          <div class="ui-element game-button" id="toggle_store_menu">
+            <img class="ui-image" src="./assets/icons/shop_icon.png">
+          </div>
+
+          <div class="ui-element game-button toggle-clan-btn" id="toggle_clan_menu">
+            <img class="ui-image" src="./assets/icons/no_clan_icon.png">
+          </div>
+        </div>
+      </div>
+
+      <div class="store-menu-holder hidden" id="store_menu_holder">
+        <div class="store-menu-wrapper ui-element">
+          <header class="store-menu-header">
+            <ul class="store-menu-navbar">
+              <li class="store-btn game-button ui-element active-game-btn" id="store_nav_hats">Hats</li>
+              <li class="store-btn game-button ui-element" id="store_nav_modules">Modules</li>
+            </ul>
+          </header>
+
+          <container class="store-menu-container">
+            <box class="store-menu-box" id="store_menu_hats">
+              <ul class="store-hats-items"></ul>
+            </box>
+
+            <box class="store-menu-box hidden" id="store_menu_modules">
+              <ul class="store-modules-items"></ul>
+            </box>
+          </container>
+        </div>
+      </div>
+
+      <div class="clan-menu-holder hidden" id="clan_menu_holder">
+        <div class="clan-menu-wrapper ui-element">
+          <header class="clan-menu-header">
+            <ul class="clan-menu-navbar">
+              <li class="clan-nav-text" id="clan_nav_clans">Clans</li>
+              <li class="clan-btn game-button ui-element active-game-btn hidden" id="clan_nav_members">Members</li>
+              <li class="clan-btn game-button ui-element hidden" id="clan_nav_requests">Requests</li>
+            </ul>
+          </header>
+
+          <container class="clan-menu-container">
+            <box class="clan-menu-box" id="clan_menu_clans">
+              <ul class="clan-join-items"></ul>
+
+              <div class="clan-footer-wrapper">
+                <input class="clan-name-input text-input" id="clan_name_input" type="text" maxlength="8" placeholder="Clan name...">
+                
+                <div class="clan-btn clan-create-btn game-button ui-element" id="clan_create_btn">Create</div>
+              </div>
+            </box>
+
+            <box class="clan-menu-box hidden" id="clan_menu_members">
+              <ul class="clan-members-items"></ul>
+
+              <div class="clan-footer-wrapper">
+                <div class="clan-btn clan-dissolve-btn game-button ui-element" id="clan_dissolve_btn">Dissolve</div>
+              </div>
+            </box>
+
+            <box class="clan-menu-box hidden" id="clan_menu_requests">
+              <ul class="clan-requests-items"></ul>
+            </box>
+          </container>
+        </div>
+      </div>
+
+      <div class="leader-board-holder hidden" id="leader_board">
+        <div class="leader-board-wrapper">
+          <ul class="table-titles">
+            <li class="table-title rank-title">Rank</li>
+            <li class="table-title nickname-title">Nickname</li>
+            <li class="table-title gold-title">Gold</li>
+            <li class="table-title kill-title">Kills</li>
+          </ul>
+  
+          <ul class="leader-board-list" id="leader_board_list"></ul>
+        </div>
+      </div>
+
+      <div class="chat-holder hidden" id="chat_holder">
+        <div class="chat-wrapper">
+          <div class="input-chat-wrapper">
+            <input type="text" class="text-input" id="chat_input" maxlength="40" placeholder="Enter message...">
+          </div>
+        </div>
+      </div>
+      
+      <div class="middle-holder">
+        <div class="middle-top-holder">
+          <div class="upgrades-bar-holder">
+            <div class="action-bar-wrapper" id="upgrades_bar"></div>
+          </div>
+
+          <div class="item-info-holder hidden" id="item_info_holder">
+            <div class="item-info-wrapper ui-element">
+              <header class="item-info-header">
+                <div class="item-info-image-wrapper ui-element">
+                  <img class="item-info-image" id="item_info_image">
+                </div>
+
+                <span class="item-info-name" id="item_info_name"></span>
+                <span class="item-info-count" id="item_info_count"></span>
+              </header>
+              
+              <container class="item-info-container">
+                <box class="item-info-box">
+                  <span class="item-info-description" id="item_info_description"></span>
+                </box>
+
+                <box class="item-info-box">
+                  <div class="item-info-req" id="item_info_req"></div>
+                </box>
+              </container>
+            </div>
+          </div>
+        </div>
+
+        <div class="middle-bottom-holder">
+          <div class="action-bar-holder">
+            <div class="action-bar-wrapper" id="action_bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notifications-holder">
+        <ul class="notifications-wrapper" id="notifications_list"></ul>
+      </div>
+
+      <div class="minimap-holder minimap-to-left">
+        <canvas class="ui-element" id="minimap_canvas" width="150" height="150"></canvas>
+      </div>
+    </div>
+
+    <div class="debug-panel-holder hidden" id="debug_panel_holder">
+      <ul class="debug-panel-wrapper" id="debug_panel_wrapper">
+
+      </ul>
+    </div>
+
+    <canvas id="game_canvas"></canvas>
+
+    <script src="./bundle.js"></script>
+  </body>
+</html>
